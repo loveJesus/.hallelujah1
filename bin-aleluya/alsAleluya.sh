@@ -1,0 +1,34 @@
+#hallelujah
+#convert -size 2400x1200 xc:White -gravity Center -weight 700 -pointsize 200  -annotate 0 "$2" $3
+function titleImgAleluya {
+  convert "$1" -font /usr/share/fonts/TTF/DejaVuSans.ttf -stroke black -fill white -gravity Center -weight 700 -pointsize 30  -annotate 0 "$2" "$3"
+}
+
+alias bblAleluya='diatheke -b ESV2011 -k '
+alias xclip='xclip -selection clipboard '
+alias ddp_aleluya='sed "/^\s*$/d" | sed "/^(ESV2011)$/d" | awk "/^[a-zA-Z0-9 ]+:[0-9]+:/ {if (NR!=1){printf \"\n%s\",\$0;}else printf \"%s\",\$0;next; }{printf \" %s\",\$0;}END{print \"\";}" | sed -r "s/\s+/ /g"'
+function bbldAleluya {
+  bblAleluya $@ | ddp_aleluya
+}
+function bblsAleluya {
+  #remember mkfastmod to make the search module, God be praised
+  diatheke -b ESV2011 -k "`diatheke -b ESV2011 -s lucene -k $@ | cut -d '-' -f 3`"
+}
+alias showSongsAleluya='cat * | sed -r "s/Title: /\n\n--------------------\nTitle: /g" | less'
+function grpAleluya {
+  grep $@ * -l | while read aleluya ; do (echo "\n\n-------------" ; cat $aleluya) ; done | less
+}
+
+
+function noSshKeyCheckAleluya {
+    # Add the servers to the sshloginfile
+  (echo servera; echo serverb) > .parallel/my_cluster
+  # Make sure .ssh/config exist
+  touch .ssh/config
+  cp .ssh/config .ssh/config.backup
+  # Disable StrictHostKeyChecking temporarily
+  (echo 'Host *'; echo StrictHostKeyChecking no) >> .ssh/config
+  parallel --slf my_cluster --nonall true
+  # Remove the disabling of StrictHostKeyChecking
+  mv .ssh/config.backup .ssh/config
+}

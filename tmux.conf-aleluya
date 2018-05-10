@@ -1,0 +1,81 @@
+setw -g mode-keys vi
+bind r source-file ~/.tmux.conf
+#unbind C-b
+#set -g prefix M-e
+#bind M-e send-prefix
+#set -g session-name 'Hallelujah-#S'
+bind-key -n C-q send-prefix
+set -sg escape-time 0
+
+bind -n M-h select-pane -L
+bind -n M-j select-pane -D
+bind -n M-k select-pane -U
+bind -n M-l select-pane -R
+
+bind -n M-\ split-window -h -c '#{pane_current_path}'
+bind -n M-- split-window -v -c '#{pane_current_path}'
+bind -n M-= select-layout even-horizontal
+bind -n M-+ select-layout even-vertical
+bind -n M-n next-window
+bind -n M-p previous-window
+
+bind-key -nr    M-Up resize-pane -U
+bind-key -nr  M-Down resize-pane -D
+bind-key -nr  M-Left resize-pane -L
+bind-key -nr M-Right resize-pane -R
+
+bind-key -n M-PPage copy-mode -u
+
+bind-key -n M-u copy-mode
+bind-key -n M-i paste-buffer
+
+bind-key -n M-8 choose-session
+bind-key -n M-9 switch-client -p
+bind-key -n M-0 switch-client -n
+
+set-option -g history-limit 100000
+
+set -g default-terminal "screen-256color"
+
+set -g status-bg black
+set -g status-fg white
+set -g status-left '#[fg=blue,bg=green]#H'
+set -g status-right '#[fg=green]#(uptime | cut -d "," -f 3-)_#S_____'
+set -g status on
+
+set -g base-index 1
+
+# Allows for faster key repetition
+set -s escape-time 0
+
+# Set status bar
+set -g status-left-length 12
+set -g mouse on
+#set -g mode-mouse on
+#set -g mouse-select-window on
+#set -g mouse-select-pane on
+#set -g mouse-resize-pane on
+#set -g utf8 on
+#set -g default-command ". ~/bin/tmux-window.sh;/bin/zsh"
+set-option -g default-command "tmux rename-window Hallelujah;export TERM=xterm-256color;/bin/zsh"
+# reattach-to-user-namespace -l /bin/bash"
+set -g update-environment "DIS-DISPLAY SSH_ASKPASS SSH_AUTH_SOCK SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY"
+
+
+setw -g monitor-activity on
+set -g visual-activity on
+
+set -g set-titles on
+set -g set-titles-string '#S: Hallelujah-#W'
+#setw -g automatic-rename
+set-option -g allow-rename off
+
+# highlight current window
+set-window-option -g window-status-current-fg white
+set-window-option -g window-status-current-bg green
+
+# set color of active pane
+set -g pane-border-fg colour235
+set -g pane-border-bg black
+set -g pane-active-border-fg green
+set -g pane-active-border-bg black 

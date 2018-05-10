@@ -1,0 +1,12 @@
+"Hallelujah
+set nocompatible              " be iMproved, required
+nmap <C-N><C-N> :set invnumber<CR>
+set pastetoggle=<F3>
+nmap <C-O> :NERDTreeTabsToggle<CR>
+syntax on
+filetype off                  " required
+set tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab
+syntax on
+filetype plugin indent on
+set mouse=a
+execute pathogen#infect()
