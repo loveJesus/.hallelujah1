@@ -7,7 +7,7 @@ echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
   sudo apt install diatheke libsword-utils  -y
-  sudo apt-get install software-properties-common python-software-properties
+  sudo apt-get install software-properties-common python-software-properties sqlite3
   echo | sudo add-apt-repository ppa:gophers/archive
   echo | sudo add-apt-repository ppa:git-core/ppa
   wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && sudo dpkg -i erlang-solutions_1.0_all.deb
@@ -37,10 +37,21 @@ then
   if [[ $REPLY = "y" ]]; then
       sudo apt-get install git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev
 
-      sudo apt perl nodejs ruby-dev ocaml opam  clang golang-1.10-go flex bison -y
+      curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+      sudo apt-get install -y nodejs
+      #sudo npm install -g grunt-cli yarn @angular/cli
+
+      curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+      echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+      sudo apt-get update && sudo apt-get install yarn -y
+
+      sudo apt perl ruby-dev ocaml opam  clang golang-1.10-go flex bison -y
       sudo apt-get install python-dev python-pip python-virtualenv python-numpy python-matplotlib -y
       sudo apt install php php-dev php-mcrypt php-mysql php-mbstring php-dom -y
       sudo apt install libpcap-dev libnet1-dev rpcbind openssh-server nmap -y
+
+
+      sudo apt install mongodb-server postgresql postgresql-contrib mysql-server libmysqlclient-dev libsqlite3-dev -y
       sudo apt install elixir esl-erlang -y
       echo Y | mix local.hex 
       echo Y | mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez
@@ -59,6 +70,20 @@ then
       echo "eval $(rbenv init -)" >> ~/.bashrc
       echo "export PATH=$HOME/.rbenv/plugins/ruby-build/bin:$PATH" >> ~/.bashrc
       gem install bundler jekyll mysql2 rails jekyll-pagedown
+
+      read -p "Set up mono environment? [y/n] ? " -n 1 -r
+      echo
+      if [[ $REPLY = "y" ]]; then
+     
+        sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+        echo "deb http://download.mono-project.com/repo/debian wheezy main" | sudo tee /etc/apt/sources.list.d/mono-xamarin.list
+        sudo apt update
+        # install mono libraries
+        sudo apt install mono-devel mono-complete referenceassemblies-pcl ca-certificates-mono mono-xsp4 -y
+        # install mono ide
+        sudo apt install monodevelop-nunit monodevelop-versioncontrol monodevelop-database -y
+      fi
+
   fi
 
 fi
