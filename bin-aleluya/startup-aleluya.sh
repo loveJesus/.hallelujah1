@@ -1,2 +1,4 @@
 #!Hallelujah
-export PATH=$PATH:~/apps-aleluya/kotlinc-aleluya/bin
+export PATH=$PATH:~/apps-aleluya/kotlinc-aleluya/bin:~/apps-aleluya/kotlin-native-aleluya/bin
+export LESS='-R'
+export LESSOPEN='|~/.lessfilter %s'
