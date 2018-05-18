@@ -19,6 +19,14 @@ function grpAleluya {
   grep $@ * -l | while read aleluya ; do (echo "\n\n-------------" ; cat $aleluya) ; done | less
 }
 
+function postit_aleluya {
+  nxxd_aleluya=`curl -X POST -H "Content-Type: $2" --data-binary "@$1"  https://loveJesus.xyz/sha-aleluya/input-aleluya.php\?lnk-aleluya\=$3 | xxd -ps | paste -sd ''`
+  echo $nxxd_aleluya | tee -a ~/lposts_aleluya
+}
+
+function readit_aleluya {
+  curl https://loveJesus.xyz/sha-aleluya/$1
+}
 
 function refreshNameCheapDomains_aleluya {
 curl "https://api.namecheap.com/xml.response?ApiUser=brianloveJesus&ApiKey=$NAMECHEAP_API_KEY_aleluya&UserName=brianloveJesus&Command=namecheap.domains.getList&ClientIp=$NAMECHEAP_CLIENT_IP_aleluya&PageSize=100" | ~/bin-aleluya/xml2json-aleluya.py | python -mjson.tool >| domains-nc-aleluya.json
