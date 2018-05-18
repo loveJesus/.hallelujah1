@@ -3,5 +3,5 @@ export PATH=$PATH:~/apps-aleluya/kotlinc-aleluya/bin:~/apps-aleluya/kotlin-nativ
 export LESS='-R'
 export LESSOPEN='|~/.lessfilter %s'
 export PATH="$HOME/.cargo/bin:$PATH"
-
+source ~/.envhere-aleluya
 source ~/bin-aleluya/aliases-aleluya.sh
