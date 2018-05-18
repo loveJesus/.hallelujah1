@@ -37,6 +37,8 @@ then
   if [[ $REPLY = "y" ]]; then
       sudo apt-get install git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev
 
+      #wget https://github.com/JetBrains/kotlin-native/releases/download/v0.7/kotlin-native-linux-0.7.tar.gz
+      curl https://sh.rustup.rs -sSf | sh
       curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
       sudo apt-get install -y nodejs
       #sudo npm install -g grunt-cli yarn @angular/cli
@@ -92,12 +94,12 @@ read -p "Set up prezto [y/n] ? " -n 1 -r
 echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
- 
+  zsh -e ' 
   git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
   setopt EXTENDED_GLOB
   for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
     ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
-  done
+  done '
 fi
 
 read -p "Set up tmux/vim [y/n] ? " -n 1 -r

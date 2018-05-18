@@ -20,6 +20,12 @@ function grpAleluya {
 }
 
 
+function refreshNameCheapDomains_aleluya {
+curl "https://api.namecheap.com/xml.response?ApiUser=brianloveJesus&ApiKey=$NAMECHEAP_API_KEY_aleluya&UserName=brianloveJesus&Command=namecheap.domains.getList&ClientIp=$NAMECHEAP_CLIENT_IP_aleluya&PageSize=100" | ~/bin-aleluya/xml2json-aleluya.py | python -mjson.tool >| domains-nc-aleluya.json
+
+}
+
+
 function noSshKeyCheckAleluya {
     # Add the servers to the sshloginfile
   (echo servera; echo serverb) > .parallel/my_cluster
