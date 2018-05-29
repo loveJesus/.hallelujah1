@@ -1,5 +1,7 @@
 #!/bin/bash
-#Hallelujah
+# For God so loved the world, that He gave His only begotten Son
+# That all who believe in Him should not perish but have everlasting
+# LIFE
 echo "Hallelujah please make sure this is in ~/.hallelujah1/"
 
 read -p "Set up apt [y/n] ? " -n 1 -r
