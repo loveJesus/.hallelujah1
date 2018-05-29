@@ -4,7 +4,7 @@ function titleImgAleluya {
   convert "$1" -font /usr/share/fonts/TTF/DejaVuSans.ttf -stroke black -fill white -gravity Center -weight 700 -pointsize 30  -annotate 0 "$2" "$3"
 }
 
-alias bblAleluya='diatheke -b ESV2011 -k '
+alias bblAleluya='diatheke -f plain -b ESV2011 -k '
 alias xclip='xclip -selection clipboard '
 alias ddp_aleluya='sed "/^\s*$/d" | sed "/^(ESV2011)$/d" | awk "/^[a-zA-Z0-9 ]+:[0-9]+:/ {if (NR!=1){printf \"\n%s\",\$0;}else printf \"%s\",\$0;next; }{printf \" %s\",\$0;}END{print \"\";}" | sed -r "s/\s+/ /g"'
 function bbldAleluya {
@@ -12,7 +12,7 @@ function bbldAleluya {
 }
 function bblsAleluya {
   #remember mkfastmod to make the search module, God be praised
-  diatheke -b ESV2011 -k "`diatheke -b ESV2011 -s lucene -k $@ | cut -d '-' -f 3`"
+  diatheke -f plain -b ESV2011 -k "`diatheke -b ESV2011 -s lucene -k $@ | cut -d '-' -f 3`"
 }
 alias showSongsAleluya='cat * | sed -r "s/Title: /\n\n--------------------\nTitle: /g" | less'
 function grpAleluya {

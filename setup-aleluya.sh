@@ -1,4 +1,4 @@
-#!/hallelujah/bin/bash
+#!/bin/bash
 #Hallelujah
 echo "Hallelujah please make sure this is in ~/.hallelujah1/"
 
