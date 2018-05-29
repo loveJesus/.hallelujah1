@@ -8,21 +8,28 @@ read -p "Set up apt [y/n] ? " -n 1 -r
 echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-  sudo apt install diatheke libsword-utils  -y
-  sudo apt-get install software-properties-common python-software-properties sqlite3 -y
-  echo | sudo add-apt-repository ppa:gophers/archive
-  echo | sudo add-apt-repository ppa:git-core/ppa
-  aleluya=`mktemp`
-  wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb -O $aleluya.deb && sudo dpkg -i $aleluya.deb
-  rm $aleluya.deb -f
-  sudo apt update
-  sudo apt install locales-all -y
-  sudo dpkg-reconfigure locales
-  sudo apt install socat ufw vim tmux zsh whois telnet dnsutils build-essential  -y
-  sudo apt install lib32z1 lib32ncurses5 lib32stdc++6  -y
-  sudo useradd hallelujah -G sudo,adm,docker,audio,www-data,video,voice,cdrom,floppy,plugdev,users,input
-  sudo chsh hallelujah -s /bin/zsh
-  sudo chown hallelujah:hallelujah /home/hallelujah -R
+  read -p "Set up phase 1 - Hallelujah [y/n] ? " -n 1 -r
+  echo    # (optional) move to a new line
+  if [[ $REPLY =~ ^[Yy]$ ]]
+  then
+     
+    sudo apt install diatheke libsword-utils  -y
+    sudo apt-get install software-properties-common python-software-properties sqlite3 -y
+    echo | sudo add-apt-repository ppa:gophers/archive
+    echo | sudo add-apt-repository ppa:git-core/ppa
+    aleluya=`mktemp`
+    wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb -O $aleluya.deb && sudo dpkg -i $aleluya.deb
+    rm $aleluya.deb -f
+    sudo apt update
+    sudo apt install locales-all -y
+    sudo dpkg-reconfigure locales
+    sudo apt install socat ufw vim tmux zsh whois telnet dnsutils build-essential  -y
+    sudo apt install lib32z1 lib32ncurses5 lib32stdc++6  -y
+    sudo useradd hallelujah 
+    sudo usermod hallelujah -G sudo,adm,audio,www-data,video,voice,cdrom,floppy,plugdev,users,input
+    sudo chsh hallelujah -s /bin/zsh
+    sudo chown hallelujah:hallelujah /home/hallelujah 
+  fi  #HALLELUJAH phase 1
 
   read -p "Set up sword user or root [u/r] ? " -n 1 -r
   echo    # (optional) move to a new line
@@ -50,7 +57,10 @@ then
   read -p "Set up dev environment? [y/n] ? " -n 1 -r
   echo
   if [[ $REPLY = "y" ]]; then
-      sudo apt-get install docker.io git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev
+      sudo apt-get install docker.io
+      sudo usermod hallelujah -G  docker
+
+      sudo apt-get install  socat git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev
 
       #wget https://github.com/JetBrains/kotlin-native/releases/download/v0.7/kotlin-native-linux-0.7.tar.gz
       curl https://sh.rustup.rs -sSf | sh
