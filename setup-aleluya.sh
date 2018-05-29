@@ -7,23 +7,36 @@ echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
   sudo apt install diatheke libsword-utils  -y
-  sudo apt-get install software-properties-common python-software-properties sqlite3
+  sudo apt-get install software-properties-common python-software-properties sqlite3 -y
   echo | sudo add-apt-repository ppa:gophers/archive
   echo | sudo add-apt-repository ppa:git-core/ppa
-  wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && sudo dpkg -i erlang-solutions_1.0_all.deb
+  aleluya=`mktemp`
+  wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb -O $aleluya.deb && sudo dpkg -i $aleluya.deb
+  rm $aleluya.deb -f
   sudo apt update
   sudo apt install locales-all -y
-  sudo dpkg-reconfigure localed
-  sudo apt install ufw vim tmux zsh docker.io whois telnet bind-utils build-essential lib32z1 lib32ncurses5 lib32stdc++6  -y
-
+  sudo dpkg-reconfigure locales
+  sudo apt install socat ufw vim tmux zsh whois telnet dnsutils build-essential  -y
+  sudo apt install lib32z1 lib32ncurses5 lib32stdc++6  -y
   sudo useradd hallelujah -G sudo,adm,docker,audio,www-data,video,voice,cdrom,floppy,plugdev,users,input
   sudo chsh hallelujah -s /bin/zsh
   sudo chown hallelujah:hallelujah /home/hallelujah -R
 
-  echo "yes" | installmgr -init
-  echo "yes" | installmgr -rc
-  echo "yes" | installmgr -r CrossWire
-  echo "yes" | installmgr -ri CrossWire ESV2011
+  read -p "Set up sword user or root [u/r] ? " -n 1 -r
+  echo    # (optional) move to a new line
+  if [[ $REPLY =~ ^[Uu]$ ]]
+  then
+    echo "yes" | installmgr -init
+    echo "yes" | installmgr -rc
+    echo "yes" | installmgr -r CrossWire
+    echo "yes" | installmgr -ri CrossWire ESV2011
+  elif [[ $REPLY =~ ^[Rr]$ ]]
+  then
+    sudo -iu root bash -c 'echo "yes" | installmgr -init'
+    sudo -iu root bash -c 'echo "yes" | installmgr -rc'
+    sudo -iu root bash -c 'echo "yes" | installmgr -r CrossWire'
+    sudo -iu root bash -c 'echo "yes" | installmgr -ri CrossWire ESV2011'
+  fi
 
 
   read -p "Set up lxde vnc Hallelujah [y/n] ? " -n 1 -r
@@ -35,7 +48,7 @@ then
   read -p "Set up dev environment? [y/n] ? " -n 1 -r
   echo
   if [[ $REPLY = "y" ]]; then
-      sudo apt-get install git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev
+      sudo apt-get install docker.io git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev
 
       #wget https://github.com/JetBrains/kotlin-native/releases/download/v0.7/kotlin-native-linux-0.7.tar.gz
       curl https://sh.rustup.rs -sSf | sh
@@ -94,12 +107,12 @@ read -p "Set up prezto [y/n] ? " -n 1 -r
 echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-  zsh -e ' 
-  git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
-  setopt EXTENDED_GLOB
-  for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
-    ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
-  done '
+  zsh -c ' 
+  git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto";
+  setopt EXTENDED_GLOB;
+  for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do;
+    ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}";
+  done ;'
 fi
 
 read -p "Set up tmux/vim [y/n] ? " -n 1 -r
