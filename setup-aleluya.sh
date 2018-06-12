@@ -51,7 +51,7 @@ then
   read -p "Set up lxde vnc Hallelujah [y/n] ? " -n 1 -r
   echo
   if [[ $REPLY = "y" ]]; then
-      sudo apt install vnc4server lxde -y
+      sudo apt install vnc4server lxde-core -y
   fi
 
   read -p "Set up dev environment? [y/n] ? " -n 1 -r
