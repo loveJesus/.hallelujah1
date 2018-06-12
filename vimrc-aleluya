@@ -1,4 +1,7 @@
+"For God so loved the world, that He gave His only begotten Son
+"That all who believe in Him should not perish but have everlasting life
 "Hallelujah
+autocmd BufNewFile,BufRead *.onsong set syntax=chordpro
 set nocompatible              " be iMproved, required
 nmap <C-N><C-N> :set invnumber<CR>
 set pastetoggle=<F3>

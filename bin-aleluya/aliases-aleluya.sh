@@ -34,7 +34,9 @@ curl "https://api.namecheap.com/xml.response?ApiUser=brianloveJesus&ApiKey=$NAME
 
 }
 
-
+function jsonPP_aleluya {
+	cat $1 | python -m json.tool | pygmentize
+}
 function noSshKeyCheckAleluya {
     # Add the servers to the sshloginfile
   (echo servera; echo serverb) > .parallel/my_cluster
