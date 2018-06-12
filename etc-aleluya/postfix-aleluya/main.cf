@@ -20,8 +20,8 @@ append_dot_mydomain = no
 readme_directory = no
 
 # TLS parameters
-smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
-smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+smtpd_tls_cert_file = /etc/postfix/ssl/mailserver.crt
+smtpd_tls_key_file = /etc/postfix/ssl/mailserver.key
 smtpd_use_tls=yes
 smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
 smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
@@ -30,10 +30,10 @@ smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
 # information on enabling SSL in the smtp client.
 
 smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
-myhostname = localhost
+myhostname = silencetheviolence.faith
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
-#mydestination = $myhostname, localdomain, localhost, localhost.localdomain, localhost, loveJesus.xyz, xjes.us, nusratschildren.faith
+mydestination = localdomain, localhost, localhost.localdomain, localhost
 relayhost = 
 mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
 #$mailbox_command = procmail -a "$EXTENSION"
@@ -44,7 +44,7 @@ inet_protocols = all
 myorigin = /etc/mailname
 
 
-#virtual_alias_maps = hash:/etc/postfix/virtual-aleluya
+virtual_alias_maps = hash:/etc/postfix/virtual-aleluya
 home_mailbox = Maildir-aleluya/
 virtual_mailbox_domains = /etc/postfix/vhosts-aleluya
 virtual_mailbox_base = /home/vmail-aleluya
@@ -52,3 +52,13 @@ virtual_mailbox_maps = hash:/etc/postfix/vmaps-aleluya
 virtual_minimum_uid = 1000
 virtual_uid_maps = static:5000
 virtual_gid_maps = static:5000
+
+smtpd_sasl_auth_enable = yes
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/auth-client-aleluya
+smtpd_sasl_security_options = noanonymous
+smtpd_sasl_tls_security_options = $smtpd_sasl_security_options
+#smtpd_sasl_local_domain = $mydomain
+#broken_sasl_auth_clients = yes
+
+#smtpd_recipient_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination

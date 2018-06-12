@@ -14,6 +14,7 @@ then
   then
      
     sudo apt install diatheke libsword-utils  -y
+    sudo apt-get install apt-transport-https -y
     sudo apt-get install software-properties-common python-software-properties sqlite3 -y
     echo | sudo add-apt-repository ppa:gophers/archive
     echo | sudo add-apt-repository ppa:git-core/ppa
@@ -57,14 +58,18 @@ then
   read -p "Set up dev environment? [y/n] ? " -n 1 -r
   echo
   if [[ $REPLY = "y" ]]; then
+    read -p "Set up docker environment? [y/n] ? " -n 1 -r
+    echo
+    if [[ $REPLY = "y" ]]; then
+ 
       sudo apt-get install docker.io
       sudo usermod hallelujah -G  docker
-
+    fi
       sudo apt-get install  socat git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev
 
       #wget https://github.com/JetBrains/kotlin-native/releases/download/v0.7/kotlin-native-linux-0.7.tar.gz
       curl https://sh.rustup.rs -sSf | sh
-      curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+      curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash
       sudo apt-get install -y nodejs
       #sudo npm install -g grunt-cli yarn @angular/cli
 
@@ -86,6 +91,8 @@ then
       #sudo apt install apache2 apache2-utils libapache2-mod-php -y
       # Enable mod_rewrite for apache2
       #sudo a2enmod rewrite
+      curl -s "https://get.sdkman.io" | bash
+      . source "$HOME/.sdkman/bin/sdkman-init.sh"
 
       # clone rbenv
       git clone https://github.com/rbenv/rbenv.git ~/.rbenv
@@ -113,6 +120,37 @@ then
 
   fi
 
+fi
+
+read -p "Set up postfix HALLELUJAH [y/n] ? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+
+  sudo bash <<ALELUYA
+  sudo groudpass vmail-aleluya -u 5000
+  sudo useradd vmail-aleluya -u 5000 -g 5000 -m
+ALELUYA
+
+  sudo apt install postfix  -y
+  sudo cp ~/.hallelujah1/etc-aleluya/postfix-aleluya/* /etc/postfix -r
+  read -p "Hallelujah - hostname : " HOSTNAME_ALELUYA
+  echo
+  sudo postconf -e "myhostname = $HOSTNAME_ALELUYA" 
+  
+  sudo apt install dovecot dovecot-lmptd -y
+  sudo cp ~/.hallelujah1/etc-aleluya/dovecot-aleluya/* /etc/dovecot -r
+
+  sudo bash <<ALELUYA
+  echo $HOSTNAME_ALELUYA >> /etc/postfix/vhosts-aleluya
+  echo aleluya@$HOSTNAME_ALELUYA aleluya@$HOSTNAME_ALELUYA aleluya@loveJesus.xyz >> /etc/postfix/virtual-aleluya
+  echo aleluya@$HOSTNAME_ALELUYA $HOSTNAME_ALELUYA/aleluya-aleluya/ >> /etc/postfix/vmaps-aleluya
+  cd /etc/postfix
+  mkdir -p /var/spool/postfix/private
+  ./remap-aleluya.sh
+  mkdir -p /var/dovecot/d-aleluya/$HOSTNAME_ALELUYA/
+  echo aleluya@$HOSTNAME_ALELUYA:$RND_ALELUYA:::::: > /var/dovecot/d-aleluya/$HOSTNAME_ALELUYA/passwd-aleluya
+ALELUYA
 fi
 
 read -p "Set up prezto [y/n] ? " -n 1 -r
