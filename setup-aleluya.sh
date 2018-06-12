@@ -125,6 +125,9 @@ then
   for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do;
     ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}";
   done ;'
+  echo ". ~/bin-aleluya/startup-aleluya.sh" >> ~/.zshrc
+  touch ~/.envhere-aleluya
+
 fi
 
 read -p "Set up tmux/vim [y/n] ? " -n 1 -r
