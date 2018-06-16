@@ -128,7 +128,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]
 then
 
   sudo bash <<ALELUYA
-  sudo groudpass vmail-aleluya -u 5000
+  sudo groupadd vmail-aleluya -g 5000
   sudo useradd vmail-aleluya -u 5000 -g 5000 -m
 ALELUYA
 
@@ -136,9 +136,10 @@ ALELUYA
   sudo cp ~/.hallelujah1/etc-aleluya/postfix-aleluya/* /etc/postfix -r
   read -p "Hallelujah - hostname : " HOSTNAME_ALELUYA
   echo
+  sudo bash -c "echo $HOSTNAME_ALELUYA >| /etc/mailname" 
   sudo postconf -e "myhostname = $HOSTNAME_ALELUYA" 
   
-  sudo apt install dovecot dovecot-lmptd -y
+  sudo apt install dovecot-lmtpd -y
   sudo cp ~/.hallelujah1/etc-aleluya/dovecot-aleluya/* /etc/dovecot -r
 
   sudo bash <<ALELUYA
