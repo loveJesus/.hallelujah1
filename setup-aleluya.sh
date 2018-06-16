@@ -14,7 +14,7 @@ then
   then
      
     sudo apt install diatheke libsword-utils  -y
-    sudo apt-get install apt-transport-https -y
+    sudo apt-get install apt-transport-https zip unzip w3m -y
     sudo apt-get install software-properties-common python-software-properties sqlite3 -y
     echo | sudo add-apt-repository ppa:gophers/archive
     echo | sudo add-apt-repository ppa:git-core/ppa
@@ -27,7 +27,6 @@ then
     sudo apt install socat ufw vim tmux zsh whois telnet dnsutils build-essential  -y
     sudo apt install lib32z1 lib32ncurses5 lib32stdc++6  -y
     sudo useradd hallelujah 
-    sudo usermod hallelujah -G sudo,adm,audio,www-data,video,voice,cdrom,floppy,plugdev,users,input
     sudo chsh hallelujah -s /bin/zsh
     sudo chown hallelujah:hallelujah /home/hallelujah 
   fi  #HALLELUJAH phase 1
@@ -53,6 +52,24 @@ then
   echo
   if [[ $REPLY = "y" ]]; then
       sudo apt install vnc4server lxde-core -y
+      mkdir ~/.vnc
+      cat <<ALELUYA >| ~/.vnc/xstartup
+#!/bin/sh
+
+# Uncomment the following two lines for normal desktop:
+# unset SESSION_MANAGER
+# exec /etc/X11/xinit/xinitrc
+
+[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup
+[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources
+xsetroot -solid grey
+vncconfig -iconic &
+x-terminal-emulator -geometry 80x24+10+10 -ls -title "$VNCDESKTOP Desktop" &
+#x-window-manager &
+startlxde
+ALELUYA
+     chmod 755 ~/.vnc/xstartup
+     vncpasswd
   fi
 
   read -p "Set up dev environment? [y/n] ? " -n 1 -r
@@ -193,8 +210,20 @@ read -p "Set up ssh [y/n]? " -n 1 -r
 echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-  git config --global user.email "loveJesus@loveJesus.xyz"
-  git config --global user.name "loveJesus"
+  mkdir -p ~/.ssh
+  cat <<ALELUYA >>~/.ssh/config
+Host *
+  ForwardAgent yes
+  ServerAliveInterval 180
+  ServerAliveCountMax 2
+ALELUYA
+  cat <<ALELUYA >> ~/.ssh/authorized_keys
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDPG7JBEeyLsXnLVSyH6CzK1iJI1vC5NX5BaVQlPUhcXerpf/6r0zOf0QKUPo3lacOJxNtpX1KS+kY/mo4ehtIqFwfAysRwoh3nFgFdi+8fmYSR/gDUmj9Cxio56e45Wt0Vr1tCt+K0R0igaR1Gj+mWSQSDwJTxG5PJ+20fRy2H57j2q4oPVqDTBJ73Z7HqDIUQXiU/eHRq1G39scRiaPwqya7D7E6i5ttiZPQ7oVxBWZSaKDvwtjJJAim71AGDHzfl3glzbgtNdb7Jb/1c/mVf3vRLRdPJeIZOa/QL/Y+Rd6/rlUv84yVU/ZpkTGYWcb9ndlcJ/dBctiKB47hsL8+N hallelujah@praiseJesus
+ALELUYA
+  chown hallelujah ~/.ssh
+  chmod 700 ~/.ssh
+  chmod 600 ~/.ssh/authorized_keys
 fi
 
 
+sudo usermod hallelujah -G sudo,adm,audio,www-data,video,voice,cdrom,floppy,plugdev,users,input,davfs2,docker
