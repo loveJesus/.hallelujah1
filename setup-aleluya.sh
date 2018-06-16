@@ -24,7 +24,7 @@ then
     sudo apt update
     sudo apt install locales-all -y
     sudo dpkg-reconfigure locales
-    sudo apt install socat ufw vim tmux zsh whois telnet dnsutils build-essential  -y
+    sudo apt install socat ufw vim tmux zsh whois telnet dnsutils build-essential davfs2 -y
     sudo apt install lib32z1 lib32ncurses5 lib32stdc++6  -y
     sudo useradd hallelujah 
     sudo chsh hallelujah -s /bin/zsh
