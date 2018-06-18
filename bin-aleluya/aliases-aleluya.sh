@@ -35,11 +35,18 @@ function readit_aleluya {
   curl https://loveJesus.xyz/sha-aleluya/$1
 }
 
-function refreshNameCheapDomains_aleluya {
+function nameCheapRefreshDomains_aleluya {
   #Hallelujah for dananos @  https://blog.dotnetframework.org/2016/04/15/how-to-export-a-list-of-domains-from-namecheap/ in Jesus name
 curl "https://api.namecheap.com/xml.response?ApiUser=brianloveJesus&ApiKey=$NAMECHEAP_API_KEY_aleluya&UserName=brianloveJesus&Command=namecheap.domains.getList&ClientIp=$NAMECHEAP_CLIENT_IP_aleluya&PageSize=100" | ~/bin-aleluya/xml2json-aleluya.py | python -mjson.tool >| domains-nc-aleluya.json
-#cat domains-nc-aleluya.json| grep @Name | cut -d':' -f 2 | tr -d , | tr -d \" | while read domain_aleluya; do sld_aleluya=`echo $domain_aleluya | cut -d'.' -f 1`; tld_aleluya=`echo $domain_aleluya | cut -d'.' -f 2`; curl "https://api.namecheap.com/xml.response?ApiUser=brianloveJesus&ApiKey=$NAMECHEAP_API_KEY_aleluya&UserName=brianloveJesus&ClientIp=$NAMECHEAP_CLIENT_IP_aleluya&PageSize=100&Command=namecheap.domains.dns.getList&SLD=sld_aleluya&TLD=$tld_aleluya" > domains-aleluya/$domain_aleluya.aleluya; echo ALELUYA $domain_aleluya; done
-
+if [ "$1" = aleluya ]; then
+ cat domains-nc-aleluya.json| grep @Name | cut -d':' -f 2 | tr -d , | tr -d \" | while read domain_aleluya; do 
+   sld_aleluya=`echo $domain_aleluya | cut -d'.' -f 1`; 
+   tld_aleluya=`echo $domain_aleluya | cut -d'.' -f 2`; 
+   curl "https://api.namecheap.com/xml.response?ApiUser=brianloveJesus&ApiKey=$NAMECHEAP_API_KEY_aleluya&UserName=brianloveJesus&ClientIp=$NAMECHEAP_CLIENT_IP_aleluya&PageSize=100&Command=namecheap.domains.dns.getList&SLD=sld_aleluya&TLD=$tld_aleluya" > domains-aleluya/$domain_aleluya.aleluya &; 
+   echo ALELUYA $domain_aleluya; 
+   sleep 0.1
+ done
+fi
 }
 
 function jsonPP_aleluya {
@@ -50,7 +57,11 @@ function nameCheapSetCustom_aleluya {
   tld_aleluya=$2
   ns_aleluya=$3
   curl "https://api.namecheap.com/xml.response?ApiUser=brianloveJesus&ApiKey=$NAMECHEAP_API_KEY_aleluya&UserName=brianloveJesus&ClientIp=$NAMECHEAP_CLIENT_IP_aleluya&PageSize=100&Command=namecheap.domains.dns.setCustom&SLD=$sld_aleluya&TLD=$tld_aleluya&NameServers=$ns_aleluya"  
-
+}
+function nameCheapSetDefault_aleluya {
+  sld_aleluya=$1
+  tld_aleluya=$2
+  curl "https://api.namecheap.com/xml.response?ApiUser=brianloveJesus&ApiKey=$NAMECHEAP_API_KEY_aleluya&UserName=brianloveJesus&ClientIp=$NAMECHEAP_CLIENT_IP_aleluya&PageSize=100&Command=namecheap.domains.dns.setDefault&SLD=$sld_aleluya&TLD=$tld_aleluya"  
 }
 
 function nameCheapFilesDisplay_aleluya {

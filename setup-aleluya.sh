@@ -14,7 +14,7 @@ then
   then
      
     sudo apt install diatheke libsword-utils  -y
-    sudo apt-get install apt-transport-https zip unzip w3m -y
+    sudo apt-get install apt-transport-https zip unzip w3m aspcud m4 -y
     sudo apt-get install software-properties-common python-software-properties sqlite3 -y
     echo | sudo add-apt-repository ppa:gophers/archive
     echo | sudo add-apt-repository ppa:git-core/ppa
@@ -182,7 +182,7 @@ then
     ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}";
   done ;'
   echo ". ~/bin-aleluya/startup-aleluya.sh" >> ~/.zshrc
-  touch ~/.envhere-aleluya
+  cp ~/.hallelujah1/envhere-aleluya ~/.envhere-aleluya
 
 fi
 
