@@ -29,6 +29,7 @@ then
     sudo useradd hallelujah 
     sudo chsh hallelujah -s /bin/zsh
     sudo chown hallelujah:hallelujah /home/hallelujah 
+    pip install requests
   fi  #HALLELUJAH phase 1
 
   read -p "Set up sword user or root [u/r] ? " -n 1 -r
