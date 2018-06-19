@@ -63,6 +63,8 @@ function nameCheapSetDefault_aleluya {
   sld_aleluya=$1
   tld_aleluya=$2
   curl "https://api.namecheap.com/xml.response?ApiUser=brianloveJesus&ApiKey=$NAMECHEAP_API_KEY_aleluya&UserName=brianloveJesus&ClientIp=$NAMECHEAP_CLIENT_IP_aleluya&PageSize=100&Command=namecheap.domains.dns.setDefault&SLD=$sld_aleluya&TLD=$tld_aleluya"  
+  namecheap-api-cli-aleluya --del --domain $sld_aleluya.$tld_aleluya --name @ --type URL --address http://www.$sld_aleluya.$tld_aleluya/
+  namecheap-api-cli-aleluya --del --domain $sld_aleluya.$tld_aleluya --name www --type CNAME --address parkingpage.namecheap.com.
 }
 
 function nameCheapFilesDisplay_aleluya {
