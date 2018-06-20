@@ -55,6 +55,8 @@ def record_add(record_type, hostname, address, ttl=300):
         "Type": record_type,
         "Name": hostname,
         "Address": address,
+        "MXPref": 10,
+        "EmailType": "MX",
         "TTL": str(ttl)
     }
     api.domains_dns_addHost(domain, record)
