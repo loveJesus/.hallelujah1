@@ -87,7 +87,7 @@ ALELUYA
 
       #wget https://github.com/JetBrains/kotlin-native/releases/download/v0.7/kotlin-native-linux-0.7.tar.gz
       curl https://sh.rustup.rs -sSf | sh
-      curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash
+      curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash
       sudo apt-get install -y nodejs
       #sudo npm install -g grunt-cli yarn @angular/cli
 
@@ -97,7 +97,7 @@ ALELUYA
 
       sudo apt perl ruby-dev ocaml opam  clang golang-1.10-go flex bison -y
       sudo apt-get install python-dev python-pip python-virtualenv python-numpy python-matplotlib -y
-      sudo apt install php php-dev php-mcrypt php-mysql php-mbstring php-dom -y
+      sudo apt install php php-dev php-sqlite3 php-xml php-curl php-mcrypt php-mysql php-mbstring php-dom -y
       sudo apt install libpcap-dev libnet1-dev rpcbind openssh-server nmap -y
 
 
@@ -171,6 +171,56 @@ ALELUYA
   echo aleluya@$HOSTNAME_ALELUYA:$RND_ALELUYA:::::: > /var/dovecot/d-aleluya/$HOSTNAME_ALELUYA/passwd-aleluya
 ALELUYA
 fi
+
+read -p "Set up redis HALLELUJAH [y/n] ? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+# For God so loved the world that He gave His only begotten Son
+# That all who believe in Him should not perish but have everlasting life
+
+sudo adduser --system --group --no-create-home redis-aleluya
+sudo mkdir /var/lib/redis-aleluya
+sudo chown redis:redis /var/lib/redis-aleluya
+sudo chmod 770 /var/lib/redis-aleluya
+
+
+cd /tmp
+curl -O http://download.redis.io/redis-stable.tar.gz
+tar xzvf redis-stable.tar.gz
+rm redis-stable.tar.gz
+cd redis-stable
+make
+#make test
+sudo make install
+
+sudo mkdir /etc/redis-aleluya
+sudo cp /tmp/redis-stable/redis.conf /etc/redis-aleluya/redis-aleluya.conf
+sed -i 's/^supervised.*/supervised systemd/g'
+sed -i 's/^dir.*/dir /var/lib/redis-aleluya/g'
+
+  cat <<ALELUYA > /etc/systemd/system/redis-aleluya.service
+# For God so loved the world that He gave His only begotten Son
+# That all who believe in Him should not perish but have everlasting life
+
+# change supervised to systemd
+# and output dir
+[Unit]
+Description=Hallelujah - Redis In-Memory Data Store
+After=network.target
+
+[Service]
+User=redis-aleluya
+Group=redis-aleluya
+ExecStart=/usr/local/bin/redis-server /etc/redis-aleluya/redis-aleluya.conf
+ExecStop=/usr/local/bin/redis-cli shutdown
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+ALELUYA
+
+fi #HALLELUJAH end redis set up
 
 read -p "Set up prezto [y/n] ? " -n 1 -r
 echo    # (optional) move to a new line

@@ -20,15 +20,19 @@ for aleluya in *-aleluya; do echo ALELUYA $aleluya; nm_aleluya=`basename -s -ale
   fi
 
   if [ ! -f $aleluya/etc-aleluya/email-boxes-aleluya ]; then 
-    echo forgive-us aleluya@$nm_aleluya > $aleluya/etc-aleluya/email-boxes-aleluya;
+    echo $DEFAULT_MAIL_PW aleluya@$nm_aleluya >| $aleluya/etc-aleluya/email-boxes-aleluya;
   fi
   if [ ! -f $aleluya/etc-aleluya/email-forwards-aleluya ]; then 
-    echo aleluya@$nm_aleluya loveJesus@loveJesus.xyz > $aleluya/etc-aleluya/email-forwards-aleluya;
+    echo aleluya@$nm_aleluya loveJesus@loveJesus.xyz >| $aleluya/etc-aleluya/email-forwards-aleluya;
+    echo lovejesus@$nm_aleluya loveJesus@loveJesus.xyz >> $aleluya/etc-aleluya/email-forwards-aleluya;
+    echo brianlovejesus@$nm_aleluya loveJesus@loveJesus.xyz >> $aleluya/etc-aleluya/email-forwards-aleluya;
+    echo lovejesusbrian@$nm_aleluya loveJesus@loveJesus.xyz >> $aleluya/etc-aleluya/email-forwards-aleluya;
+
   fi
  
   DIR_ALELUYA=`pwd`/$aleluya;
   
-#  if [ ! -f $aleluya/etc-aleluya/nginx-aleluya.conf ]; then 
+  if [ ! -f $aleluya/etc-aleluya/nginx-aleluya.conf ]; then 
 cat <<ALELUYA >| $aleluya/etc-aleluya/nginx-aleluya.conf
 server {
     listen 80;
@@ -78,7 +82,7 @@ server {
     client_max_body_size 50m;
 }
 ALELUYA
-
+fi
   sudo ln -fs $DIR_ALELUYA/etc-aleluya/nginx-aleluya.conf /etc/nginx/sites-enabled/$aleluya.conf
 
   ln -fs ../../bin_aleluya/updatedns-aleluya.sh $aleluya/bin-aleluya/
