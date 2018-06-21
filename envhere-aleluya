@@ -4,3 +4,4 @@ export NAMECHEAP_API_KEY_aleluya=
 export NAMECHEAP_CLIENT_IP_aleluya=
 export NAMECHEAP_CLIENT_NAME_aleluya=
 export DEFAULT_MAIL_PW=
+export ZOOKEEPER_ALELUYA=
