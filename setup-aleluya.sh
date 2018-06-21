@@ -14,6 +14,9 @@ then
   then
      
     sudo apt install diatheke libsword-utils  -y
+    sudo apt install ufw -y
+    sudo ufw allow ssh
+    sudo ufw enable
     sudo apt-get install apt-transport-https zip unzip w3m aspcud m4 davfs2 -y
     sudo apt-get install software-properties-common python-software-properties sqlite3 -y
     echo | sudo add-apt-repository ppa:gophers/archive
@@ -170,6 +173,8 @@ ALELUYA
   mkdir -p /var/dovecot/d-aleluya/$HOSTNAME_ALELUYA/
   echo aleluya@$HOSTNAME_ALELUYA:$RND_ALELUYA:::::: > /var/dovecot/d-aleluya/$HOSTNAME_ALELUYA/passwd-aleluya
 ALELUYA
+
+  sudo ufw allow smtp
 fi
 
 
