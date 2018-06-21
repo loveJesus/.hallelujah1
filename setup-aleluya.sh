@@ -14,7 +14,7 @@ then
   then
      
     sudo apt install diatheke libsword-utils  -y
-    sudo apt-get install apt-transport-https zip unzip w3m aspcud m4 -y
+    sudo apt-get install apt-transport-https zip unzip w3m aspcud m4 davfs2 -y
     sudo apt-get install software-properties-common python-software-properties sqlite3 -y
     echo | sudo add-apt-repository ppa:gophers/archive
     echo | sudo add-apt-repository ppa:git-core/ppa
@@ -171,6 +171,55 @@ ALELUYA
   echo aleluya@$HOSTNAME_ALELUYA:$RND_ALELUYA:::::: > /var/dovecot/d-aleluya/$HOSTNAME_ALELUYA/passwd-aleluya
 ALELUYA
 fi
+
+
+read -p "Set up kafka HALLELUJAH [y/n] ? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+  # For God so loved the world that He gave His only begotten Son
+  # That all who believe in Him should not perish but have everlasting life
+  sudo adduser --system --group --no-create-home kafka-s-aleluya
+  sudo apt install zookeeperd -y
+  sudo systemctl start zookeeper
+  sudo systemctl enable zookeeper
+  pushd .
+  cd /usr/local
+  curl http://www-eu.apache.org/dist/kafka/1.1.0/kafka_2.11-1.1.0.tgz |  sudo tar xzvf - 
+  sudo rm -rf kafka-aleluya
+  sudo mv kafka_2.11-1.1.0 kafka-aleluya
+  sudo mkdir /tmp/kafka-aleluya-logs
+  sudo chmod 700 /tmp/kafka-aleluya-logs
+  sudo chown kafka-s-aleluya /tmp/kafka-aleluya-logs
+  sudo sed -i 's/^log.dirs.*/log.dirs=\/tmp\/kafka-aleluya-logs/g' /usr/local/kafka-aleluya/config/server.properties
+  popd
+
+   cat <<ALELUYA >| /tmp/kafka-aleluya.service
+# For God so loved the world that He gave His only begotten Son
+# That all who believe in Him should not perish but have everlasting life
+
+# change supervised to systemd
+# and output dir
+[Unit]
+Description=Hallelujah - Kafka  messg
+After=network.target
+
+[Service]
+User=kafka-s-aleluya
+Group=kafka-s-aleluya
+ExecStart=/usr/local/kafka-aleluya/bin/kafka-server-start.sh /usr/local/kafka-aleluya/config/server.properties
+ExecStop=/usr/local/kafka-aleluya/bin/kafka-server-stop.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+ALELUYA
+sudo mv /tmp/kafka-aleluya.service /etc/systemd/system/kafka-aleluya.service
+sudo systemctl enable kafka-aleluya
+sudo systemctl start kafka-aleluya
+
+fi
+
 
 read -p "Set up redis HALLELUJAH [y/n] ? " -n 1 -r
 echo

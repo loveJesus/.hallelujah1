@@ -32,7 +32,8 @@ for aleluya in *-aleluya; do echo ALELUYA $aleluya; nm_aleluya=`basename -s -ale
  
   DIR_ALELUYA=`pwd`/$aleluya;
   
-  if [ ! -f $aleluya/etc-aleluya/nginx-aleluya.conf ]; then 
+  #if [ ! -f $aleluya/etc-aleluya/nginx-aleluya.conf ]; then 
+  if true; then 
 cat <<ALELUYA >| $aleluya/etc-aleluya/nginx-aleluya.conf
 server {
     listen 80;
@@ -47,6 +48,7 @@ server {
     index index.php index.html index.cgi index.htm aleluya.html aleluya.php placeholder-aleluya.html;
 
     location ^~ /mail-aleluya {
+        root /var/www/vhosts-aleluya/data_aleluya/rainloop-aleluya/;
         index index.php;
 
         location ~ /mail-aleluya/.*.php {
@@ -58,6 +60,17 @@ server {
                 deny all;
         }
     }
+    location ^~ /aleluya {
+        root /var/www/vhosts-aleluya/data_aleluya/admin-aleluya/;
+        index index.php;
+
+        location ~ /aleluya/.*.php {
+           index index.php;
+           include snippets/fastcgi-php.conf;
+           fastcgi_pass unix:/run/php/php7.2-fpm.sock;
+        }
+    }
+
 
     location ~ /*.php {
         index index.php;
@@ -67,14 +80,12 @@ server {
 
 
     location / {
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header Host \$http_host;
+        proxy_pass http://$aleluya.docker-aleluya:5000;
     }
-#    location / {
-#        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-#        proxy_set_header X-Forwarded-Proto $scheme;
-#        proxy_set_header X-Real-IP $remote_addr;
-#        proxy_set_header Host $http_host;
-#        proxy_pass http://127.0.0.1:2368;
-#    }
 
     location ~ /.well-known {
         allow all;
