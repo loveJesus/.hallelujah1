@@ -194,7 +194,7 @@ then
   curl http://www-eu.apache.org/dist/kafka/1.1.0/kafka_2.11-1.1.0.tgz |  sudo tar xzvf - 
   sudo rm -rf kafka-aleluya
   sudo mv kafka_2.11-1.1.0 kafka-aleluya
-  sudo gawk -i inplace '{ if (NR==252) print "JAVA_MAJOR_VERSION=$($JAVA -version 2>&1 | sed -E -n \x27s/.* version \"([0-9]*).*$/\1/p\x27) " }' kafka-run-class.sh
+  sudo gawk -i inplace '{ if (NR!=252) {print $0 "# ALELUYA "} else {print "JAVA_MAJOR_VERSION=$($JAVA -version 2>&1 | sed -E -n \x27s/.* version \"([0-9]*).*$/\1/p\x27) " }' kafka-run-class.sh
   sudo mkdir /tmp/kafka-aleluya-logs
   sudo chmod 700 /tmp/kafka-aleluya-logs
   sudo chown kafka-s-aleluya /tmp/kafka-aleluya-logs
