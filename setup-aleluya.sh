@@ -184,7 +184,8 @@ if [[ $REPLY =~ ^[Yy]$ ]]
 then
   # For God so loved the world that He gave His only begotten Son
   # That all who believe in Him should not perish but have everlasting life
-  sudo adduser --system --group --no-create-home kafka-s-aleluya
+  sudo useradd -r -s /usr/bin/nologin -U  -M kafka-s-aleluya
+  #sudo adduser --system --group --no-create-home kafka-s-aleluya
   sudo apt install zookeeperd -y
   sudo systemctl start zookeeper
   sudo systemctl enable zookeeper
