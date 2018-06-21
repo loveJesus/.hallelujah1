@@ -188,6 +188,7 @@ then
   sudo apt install zookeeperd -y
   sudo systemctl start zookeeper
   sudo systemctl enable zookeeper
+  sudo ufw allow in on tun0 to any port 2181 proto tcp
   pushd .
   cd /usr/local
   curl http://www-eu.apache.org/dist/kafka/1.1.0/kafka_2.11-1.1.0.tgz |  sudo tar xzvf - 
