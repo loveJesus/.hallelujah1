@@ -17,7 +17,7 @@ then
     sudo apt install ufw -y
     sudo ufw allow ssh
     sudo ufw enable
-    sudo apt-get install apt-transport-https zip unzip w3m aspcud m4 davfs2 -y
+    sudo apt-get install apt-transport-https zip unzip w3m aspcud m4 davfs2 gawk -y
     sudo apt-get install software-properties-common python-software-properties sqlite3 -y
     echo | sudo add-apt-repository ppa:gophers/archive
     echo | sudo add-apt-repository ppa:git-core/ppa
@@ -194,6 +194,7 @@ then
   curl http://www-eu.apache.org/dist/kafka/1.1.0/kafka_2.11-1.1.0.tgz |  sudo tar xzvf - 
   sudo rm -rf kafka-aleluya
   sudo mv kafka_2.11-1.1.0 kafka-aleluya
+  sudo gawk -i inplace '{ if (NR==252) print "JAVA_MAJOR_VERSION=$($JAVA -version 2>&1 | sed -E -n \x27s/.* version \"([0-9]*).*$/\1/p\x27) " }' kafka-run-class.sh
   sudo mkdir /tmp/kafka-aleluya-logs
   sudo chmod 700 /tmp/kafka-aleluya-logs
   sudo chown kafka-s-aleluya /tmp/kafka-aleluya-logs
