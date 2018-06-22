@@ -306,10 +306,9 @@ if [[ $REPLY =~ ^[Yy]$ ]]
 then
   ln -s ~/.hallelujah1/tmux.conf-aleluya   ~/.tmux.conf
   ln -s ~/.hallelujah1/vimrc-aleluya       ~/.vimrc
+  if [ ! -f ~/.vim ]; then ln -s ~/.hallelujah1/vim-aleluya         ~/.vim; fi
   ln -s ~/.hallelujah1/bin-aleluya         ~/bin-aleluya
-  cd ..
-  tar xvf .hallelujah1/vim-aleluya.tgz
-  cd .hallelujah1
+  ~/.vim/do-bundles-aleluya.sh
 fi
 
 read -p "Set up git user [y/n]? " -n 1 -r
