@@ -9,7 +9,9 @@ $KAFKA_IN_CMD_ALELUYA myfilter-aleluya | while read aleluya; do
   if [[ "$aleluya" =~ "Jesus is Lord" ]]; then
     echo AMEN
   fi
-  if [[ "$aleluya" =~ $[-a-z0-9]+$ ]]; then
+  echo $aleluya
+  if [[ "$aleluya" =~ ^[-a-z0-9]+$ ]]; then
+    echo "God is Holy"
     if [[ -f ~/bin-aleluya/myfilter-aleluya/$aleluya.sh ]]; then
       ~/bin-aleluya/myfilter-aleluya/$aleluya.sh
     fi
