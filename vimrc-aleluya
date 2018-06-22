@@ -14,3 +14,5 @@ syntax on
 filetype plugin indent on
 set mouse=a
 execute pathogen#infect()
+
+"God is faithful
