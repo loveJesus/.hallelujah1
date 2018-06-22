@@ -9,13 +9,11 @@ $KAFKA_IN_CMD_ALELUYA myfilter-aleluya | while read aleluya; do
   if [[ "$aleluya" =~ "Jesus is Lord" ]]; then
     echo AMEN
   fi
-  if [[ "$aleluya" =~ "updated hallelujah1" ]]; then
-    pushd .
-    cd ~/.hallelujah1
-    git pull --rebase 
-    popd
+  if [[ "$aleluya" =~ $[-a-z0-9]+$ ]]; then
+    if [[ -f ~/bin-aleluya/myfilter-aleluya/$aleluya.sh ]]; then
+      ~/bin-aleluya/myfilter-aleluya/$aleluya.sh
+    fi
   fi
-
 
 done
 
