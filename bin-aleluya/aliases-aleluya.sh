@@ -1,6 +1,8 @@
 #!/bin/bash
 #hallelujah
 #convert -size 2400x1200 xc:White -gravity Center -weight 700 -pointsize 200  -annotate 0 "$2" $3
+export CROSS_ALELUYA=✝
+export J316G_ALELUYA="ουτως γαρ ηγαπησεν ο θεος τον κοσμον, ωστε τον υιον αυτου τον μονογενη εδωκεν, ινα πας ο πιστευων εις αυτον μη αποληται αλλα εχῃ ζωην αιωνιον."
 
 alias ddp_aleluya='sed -r "/^:/, \$d" | sed "/^\s*$/d" | sed "/^(ESV2011)$/d" | awk "/^[a-zA-Z0-9 ]+:[0-9]+:/ {if (NR!=1){printf \"\n%s\",\$0;}else printf \"%s\",\$0;next; }{printf \" %s\",\$0;}END{print \"\";}" | sed -r "s/\s+/ /g"'
 
