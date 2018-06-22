@@ -282,6 +282,8 @@ Restart=always
 WantedBy=multi-user.target
 ALELUYA
 
+  pip install -U git+git://github.com/andymccurdy/redis-py.git
+
 fi #HALLELUJAH end redis set up
 
 read -p "Set up prezto [y/n] ? " -n 1 -r
