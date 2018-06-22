@@ -100,9 +100,9 @@ ALELUYA
 
       sudo apt perl ruby-dev ocaml opam  clang golang-1.10-go flex bison -y
       sudo apt-get install python-dev python-pip python-virtualenv python-numpy python-matplotlib -y
-      sudo apt install php php-dev php-sqlite3 php-xml php-curl php-mcrypt php-mysql php-mbstring php-dom -y
+      sudo apt install php php-fpm php-dev php-sqlite3 php-xml php-curl php-mcrypt php-mysql php-mbstring php-dom -y
       sudo apt install libpcap-dev libnet1-dev rpcbind openssh-server nmap -y
-
+      sudo apt install nginx letsencrypt -y
 
       sudo apt install mongodb-server postgresql postgresql-contrib mysql-server libmysqlclient-dev libsqlite3-dev -y
       sudo apt install elixir esl-erlang -y
