@@ -1,3 +1,7 @@
+# For God so loved the world
+# That He gave His only begotten Son
+# That all who believe in Him should not perish
+# but have everlasting life
 setw -g mode-keys vi
 bind r source-file ~/.tmux.conf
 #unbind C-b
