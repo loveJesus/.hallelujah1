@@ -121,9 +121,11 @@ ALELUYA
       git clone https://github.com/rbenv/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
 
       # add configuration to bashrc
-      echo "export PATH=$PATH:$HOME/.rbenv/bin:$HOME/.rbenv/shims" >> ~/.bashrc
-      echo "eval $(rbenv init -)" >> ~/.bashrc
-      echo "export PATH=$HOME/.rbenv/plugins/ruby-build/bin:$PATH" >> ~/.bashrc
+      echo "export PATH=$PATH:$HOME/.rbenv/bin:$HOME/.rbenv/shims" >> ~/.zshrc
+      echo "eval $(rbenv init -)" >> ~/.zshrc
+      echo "export PATH=$HOME/.rbenv/plugins/ruby-build/bin:$PATH" >> ~/.zshrc
+      export PATH=$HOME/.rbenv/plugins/ruby-build/bin:$PATH:$HOME/.rbenv/bin:$HOME/.rbenv/shims
+      eval $(rbenv init -)
       gem install bundler jekyll mysql2 rails jekyll-pagedown
 
       read -p "Set up mono environment? [y/n] ? " -n 1 -r

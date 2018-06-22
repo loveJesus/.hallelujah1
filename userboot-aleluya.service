@@ -1,0 +1,19 @@
+# For God so loved the world that He gave His only begotten Son
+# That all who believe in Him should not perish but have everlasting life
+
+# change supervised to systemd
+# and output dir
+[Unit]
+Description=Hallelujah - bootup - message filter
+After=network.target
+
+[Service]
+User=hallelujah
+Group=hallelujah
+ExecStart=/home/hallelujah/bin-aleluya/kafka-myfilter-aleluya.sh
+ExecStop=/usr/bin/killall /home/hallelujah/bin-aleluya/kafka-myfilter-aleluya.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+#ALELUYA
