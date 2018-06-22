@@ -225,8 +225,11 @@ Restart=always
 WantedBy=multi-user.target
 ALELUYA
 sudo mv /tmp/kafka-aleluya.service /etc/systemd/system/kafka-aleluya.service
+sudo cp ~/.hallelujah1/userboot-aleluya.service /etc/systemd/system/userboot-aleluya.service
 sudo systemctl enable kafka-aleluya
+sudo systemctl enable userboot-aleluya
 sudo systemctl start kafka-aleluya
+sudo systemctl start  userboot-aleluya
 
 fi
 
@@ -292,8 +295,9 @@ then
     ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}";
   done ;'
   echo ". ~/bin-aleluya/startup-aleluya.sh" >> ~/.zshrc
-  cp ~/.hallelujah1/envhere-aleluya ~/.envhere-aleluya
-
+  if [ ! -f ~/.envhere-aleluya ]; then
+    cp ~/.hallelujah1/envhere-aleluya ~/.envhere-aleluya
+  fi
 fi
 
 read -p "Set up tmux/vim [y/n] ? " -n 1 -r
