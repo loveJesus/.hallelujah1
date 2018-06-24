@@ -27,7 +27,7 @@ then
     sudo apt update
     sudo apt install locales-all -y
     sudo dpkg-reconfigure locales
-    sudo apt install socat ufw vim tmux zsh whois telnet dnsutils build-essential davfs2 -y
+    sudo apt install socat emacs ufw vim tmux zsh whois telnet dnsutils build-essential davfs2 -y
     sudo apt install lib32z1 lib32ncurses5 lib32stdc++6  -y
     sudo useradd hallelujah 
     sudo chsh hallelujah -s /bin/zsh
@@ -302,7 +302,7 @@ then
   fi
 fi
 
-read -p "Set up tmux/vim [y/n] ? " -n 1 -r
+read -p "Set up tmux/emacs/vim [y/n] ? " -n 1 -r
 echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
@@ -311,6 +311,31 @@ then
   if [ ! -f ~/.vim ]; then ln -s ~/.hallelujah1/vim-aleluya         ~/.vim; fi
   ln -s ~/.hallelujah1/bin-aleluya         ~/bin-aleluya
   ~/.vim/do-bundles-aleluya.sh
+
+cat <<EOF > ~/.emacs
+;; For God so loved the world
+;; That He gave His only begotten Son
+;; That all who believe in Him should not perish
+;; But have everlasting life
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+			 ("marmalade" . "http://marmalade-repo.org/packages/")
+                          ("melpa" . "http://melpa.milkbox.net/packages/")))
+;;cpan RPC::EPC::Service DBI DBD::SQLite DBD::Pg DBD::mysql
+;;package-refresh package-install diatheke
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(xterm-mouse-mode t))
+  (global-set-key [f8] 'neotree-toggle)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+EOF
 fi
 
 read -p "Set up git user [y/n]? " -n 1 -r
