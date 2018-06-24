@@ -17,7 +17,7 @@ then
     sudo apt install ufw -y
     sudo ufw allow ssh
     sudo ufw enable
-    sudo apt-get install apt-transport-https zip unzip w3m aspcud m4 davfs2 gawk -y
+    sudo apt-get install apt-transport-https zip unzip w3m aspcud m4 davfs2 gawk jq -y
     sudo apt-get install software-properties-common python-software-properties sqlite3 -y
     echo | sudo add-apt-repository ppa:gophers/archive
     echo | sudo add-apt-repository ppa:git-core/ppa
