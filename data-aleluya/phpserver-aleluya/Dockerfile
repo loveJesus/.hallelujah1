@@ -1,4 +1,6 @@
-FROM alpine
+#ουτως γαρ ηγαπησεν ο θεος τον κοσμον, ωστε τον υιον αυτου τον μονογενη εδωκεν, ινα πας ο πιστευων εις αυτον μη αποληται αλλα εχῃ ζωην αιωνιον.
+FROM alpine:latest
+
 # Environments
 ENV TIMEZONE            America/Guatemala
 ENV PHP_MEMORY_LIMIT    512M
@@ -8,8 +10,8 @@ ENV PHP_MAX_POST        100M
 
 # Thanks Jesus for https://github.com/matriphe/docker-alpine-php/blob/master/7.0/FPM/Dockerfile and others
 
-RUN echo "@testing http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
-	&& apk add --update \
+##RUN echo "@testing http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
+RUN apk add --update \
 		lighttpd \
     runit \
     php7-mcrypt \
@@ -37,7 +39,8 @@ RUN echo "@testing http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/
 		php7-pdo_dblib \
 		php7-curl \
 		php7-ctype \
-    php7-fpm && \
+    php7-fpm  \
+    php7-session && \
 	 rm -rf /var/cache/apk/*
 
 #		runit@testing \
@@ -47,6 +50,7 @@ RUN mkdir -p /app/htdocs /app/error /etc/service/lighttpd /etc/service/php7-fpm 
 		-e 's/var\.basedir\s*=\s*".*"/var.basedir = "\/app"/' \
 		-e 's/#\s+(include "mod_fastcgi_fpm.conf")/\1/' \
 		-e 's/#\s+server.port\s+=\s+81/server.port = 5000/' \
+    -e 's/server.indexfiles.*/server.indexfiles    = ("aleluya.php","index.php", "index.html","placeholder-aleluya.html",/' \
 		/etc/lighttpd/lighttpd.conf \
 	&& sed -i -E \
 		-e 's/user\s*=\s*nobody/user = lighttpd/' \

@@ -32,8 +32,8 @@ for aleluya in *-aleluya; do echo ALELUYA $aleluya; nm_aleluya=`basename -s -ale
  
   DIR_ALELUYA=`pwd`/$aleluya;
   
-  #if [ ! -f $aleluya/etc-aleluya/nginx-aleluya.conf ]; then 
-  if true; then 
+  if [ ! -f $aleluya/etc-aleluya/nginx-aleluya.conf ]; then 
+  #if true; then 
 cat <<ALELUYA >| $aleluya/etc-aleluya/nginx-aleluya.conf
 server {
     listen 80;
@@ -62,10 +62,8 @@ server {
     }
     location ^~ /aleluya {
         root /var/www/vhosts-aleluya/data_aleluya/admin-aleluya/;
-        index index.php;
 
         location ~ /aleluya/.*.php {
-           index index.php;
            include snippets/fastcgi-php.conf;
            fastcgi_pass unix:/run/php/php7.2-fpm.sock;
         }
