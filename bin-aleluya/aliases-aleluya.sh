@@ -1,4 +1,7 @@
 #!/bin/bash
+# For God so loved the world
+# That He gave His only begotten SOn, That all who believe in Him should not perish
+# But have everlasting life
 #hallelujah
 #convert -size 2400x1200 xc:White -gravity Center -weight 700 -pointsize 200  -annotate 0 "$2" $3
 export CROSS_ALELUYA=✝
@@ -10,6 +13,10 @@ function titleImgAleluya {
   convert "$1" -font /usr/share/fonts/TTF/DejaVuSans.ttf -stroke black -fill white -gravity Center -weight 700 -pointsize 30  -annotate 0 "$2" "$3"
 }
 
+function guitar-chord2-aleluya { 
+  # God be praised - https://gschoppe.com/js/json-chords/
+  zcat ~/.hallelujah1/chordlibrary.json.gz| jq ".EADGBE | {aleluya: [.\"$1\"[].p] } " 
+}
 alias bblAleluya='diatheke -f plain -b ESV2011 -k '
 alias xclip='xclip -selection clipboard '
 

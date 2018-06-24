@@ -241,9 +241,10 @@ then
 # For God so loved the world that He gave His only begotten Son
 # That all who believe in Him should not perish but have everlasting life
 
-sudo adduser --system --group --no-create-home redis-aleluya
+sudo useradd -r -s /usr/bin/nologin -U  -M redis-aleluya
+#sudo adduser --system --group --no-create-home redis-aleluya
 sudo mkdir /var/lib/redis-aleluya
-sudo chown redis:redis /var/lib/redis-aleluya
+sudo chown redis-aleluya:redis-aleluya /var/lib/redis-aleluya
 sudo chmod 770 /var/lib/redis-aleluya
 
 
