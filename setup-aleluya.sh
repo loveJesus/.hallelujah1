@@ -83,13 +83,20 @@ ALELUYA
     echo
     if [[ $REPLY = "y" ]]; then
  
-      sudo apt-get install docker.io
+      sudo apt-get install docker.io -y
       sudo usermod hallelujah -G  docker
     fi
-      sudo apt-get install  socat git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev
+      sudo apt-get install  socat git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev -y
 
+    read -p "Aleluya - set up rust environment? [y/n] ? " -n 1 -r
+    echo
+    if [[ $REPLY = "y" ]]; then
       #wget https://github.com/JetBrains/kotlin-native/releases/download/v0.7/kotlin-native-linux-0.7.tar.gz
-      curl https://sh.rustup.rs -sSf | sh
+	curl https://sh.rustup.rs -sSf | sh
+    fi
+    read -p "Aleluya - Set up NodeJS environment? [y/n] ? " -n 1 -r
+    echo
+    if [[ $REPLY = "y" ]]; then
       curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash
       sudo apt-get install -y nodejs
       #sudo npm install -g grunt-cli yarn @angular/cli
@@ -97,37 +104,70 @@ ALELUYA
       curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
       echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
       sudo apt-get update && sudo apt-get install yarn -y
+    fi
+    read -p "Set up ocaml/ruby/go/postgres/php/nginx/python3/mysql/mongodb/elixir/dlang/java environment? [y/n] ? " -n 1 -r
+    echo
+    if [[ $REPLY = "y" ]]; then
+	sudo apt install perl ruby-dev -y
+	sudo apt install opam ocaml -y
+	sudo apt install clang -y
+	sudo apt install golang-1.10-go -y
+	sudo apt install flex bison -y
+        sudo apt install python-dev python-pip python-virtualenv python-numpy python-matplotlib -y
 
-      sudo apt perl ruby-dev ocaml opam  clang golang-1.10-go flex bison -y
-      sudo apt-get install python-dev python-pip python-virtualenv python-numpy python-matplotlib -y
-      sudo apt install php php-fpm php-dev php-sqlite3 php-xml php-curl php-mcrypt php-mysql php-mbstring php-dom -y
-      sudo apt install libpcap-dev libnet1-dev rpcbind openssh-server nmap -y
-      sudo apt install nginx letsencrypt -y
+	sudo apt install php php-fpm php-dev php-sqlite3 php-xml php-curl php-mcrypt php-mysql php-mbstring php-dom -y
 
-      sudo apt install mongodb-server postgresql postgresql-contrib mysql-server libmysqlclient-dev libsqlite3-dev -y
+	sudo apt install libpcap-dev libnet1-dev rpcbind openssh-server nmap -y
+
+	sudo apt install nginx letsencrypt -y
+
+      #dlang things
+      curl https://dlang.org/install.sh | bash -s
+
+      #Hallelujah mysql things
+      sudo apt install mysql-server libmysqlclient-dev -y
+
+      #Aleluya - sqlite dev things
+      sudo apt install libsqlite3-dev -y
+
+
+      #Aleluya postgresql things
+      sudo apt install postgresql postgresql-contrib -y
+
+      #mongodb things
+      sudo apt install mongodb-server -y
+
+      #Hallelujah - elixir/phoenix things
       sudo apt install elixir esl-erlang -y
       echo Y | mix local.hex 
       echo Y | mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez
+
       #Install apache2 and php
       #sudo apt install apache2 apache2-utils libapache2-mod-php -y
       # Enable mod_rewrite for apache2
       #sudo a2enmod rewrite
+
+      #sdkman java sdk manager
       curl -s "https://get.sdkman.io" | bash
       . source "$HOME/.sdkman/bin/sdkman-init.sh"
 
+
+      # God is good, ruby things
       # clone rbenv
       git clone https://github.com/rbenv/rbenv.git ~/.rbenv
       git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
       git clone https://github.com/rbenv/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
 
       # add configuration to bashrc
-      echo "export PATH=$PATH:$HOME/.rbenv/bin:$HOME/.rbenv/shims" >> ~/.zshrc
-      echo "eval $(rbenv init -)" >> ~/.zshrc
-      echo "export PATH=$HOME/.rbenv/plugins/ruby-build/bin:$PATH" >> ~/.zshrc
+      echo 'export PATH=$PATH:$HOME/.rbenv/bin:$HOME/.rbenv/shims' >> ~/.zshrc
+      echo 'eval $(rbenv init -)' >> ~/.zshrc
+      echo 'export PATH=$HOME/.rbenv/plugins/ruby-build/bin:$PATH' >> ~/.zshrc
       export PATH=$HOME/.rbenv/plugins/ruby-build/bin:$PATH:$HOME/.rbenv/bin:$HOME/.rbenv/shims
       eval $(rbenv init -)
       gem install bundler jekyll mysql2 rails jekyll-pagedown
 
+    fi
+    
       read -p "Set up mono environment? [y/n] ? " -n 1 -r
       echo
       if [[ $REPLY = "y" ]]; then
