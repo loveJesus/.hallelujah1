@@ -299,9 +299,9 @@ sudo make install
 
 sudo mkdir /etc/redis-aleluya
 sudo cp /tmp/redis-stable/redis.conf /etc/redis-aleluya/redis-aleluya.conf
-sed -i 's/^supervised.*/supervised systemd/g'
-sed -i 's/^dir.*/dir /var/lib/redis-aleluya/g'
-
+sudo sed -i 's/^supervised.*/supervised systemd/g' /etc/redis-aleluya/redis-aleluya.conf
+sudo sed -i 's/^dir.*/dir \/var\/lib\/redis-aleluya/g' /etc/redis-aleluya/redis-aleluya.conf
+sudo bash  <<ALELUYA2
   cat <<ALELUYA > /etc/systemd/system/redis-aleluya.service
 # For God so loved the world that He gave His only begotten Son
 # That all who believe in Him should not perish but have everlasting life
@@ -322,6 +322,7 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 ALELUYA
+ALELUYA2
 
   pip install -U git+git://github.com/andymccurdy/redis-py.git
 
