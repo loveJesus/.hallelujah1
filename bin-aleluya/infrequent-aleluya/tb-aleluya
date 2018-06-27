@@ -1,0 +1,48 @@
+#!/bin/sh
+# For God so loved the world that He gave His only begotten Son
+# That all who believe in Him should not perish but have everlasting life
+
+# Thank you Jesus for https://github.com/ValdikSS/tb-tun
+
+### BEGIN INIT INFO
+# Provides:          ipv6
+# Required-Start:    $local_fs $all
+# Required-Stop:     $local_fs $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: starts the ipv6 tunnel 
+# Description:       ipv6 tunnel start-stop-daemon
+### END INIT INFO
+ 
+# /etc/init.d/tb-aleluya
+ 
+touch /var/lock/tb-aleluya
+
+. /home/hallelujah/.envhere-aleluya
+echo ALELUYA $TBSERVER_IPV4_ALELUYA $CLIENT6_ALELUYA
+case "$1" in
+  start)
+    echo "Starting tb-aleluya "
+      echo setsid /usr/sbin/tbtun tb-aleluya $TBSERVER_IPV4_ALELUYA $CLIENT_IPV4_ALELUYA  sit > /dev/null 2>&1 &
+      setsid /usr/sbin/tbtun tb-aleluya $TBSERVER_IPV4_ALELUYA $CLIENT_IPV4_ALELUYA  sit > /dev/null 2>&1 &
+      sleep 3s #ugly, but doesn't seem to work at startup otherwise
+      ifconfig tb-aleluya up
+      ifconfig tb-aleluya inet6 add $CLIENT6_ALELUYA
+      ifconfig tb-aleluya inet6 add $ROUTED6_ALELUYA #Add as many of these as you need from your routed /64 allocation
+      ifconfig tb-aleluya mtu 1480
+      route -A inet6 add ::/0 dev tb-aleluya
+      route -A inet6 del ::/0 dev venet0
+    ;;
+  stop)
+    echo "Stopping ipv6tb"
+      ifconfig tb-aleluya down
+      route -A inet6 del ::/0 dev tb-aleluya
+      killall tbtun
+    ;;
+  *)
+    echo "Usage: /etc/init.d/tb-aleluya {start|stop}"
+    exit 1
+    ;;
+esac
+ 
+exit 0
