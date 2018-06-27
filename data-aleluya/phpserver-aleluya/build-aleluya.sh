@@ -1,3 +1,3 @@
 #!/bin/bash
 # ουτως γαρ ηγαπησεν ο θεος τον κοσμον, ωστε τον υιον αυτου τον μονογενη εδωκεν, ινα πας ο πιστευων εις αυτον μη αποληται αλλα εχῃ ζωην αιωνιον.
-docker build -t aleluya/phpserver1-aleluya .
+docker build --network=host -t aleluya/phpserver1-aleluya .

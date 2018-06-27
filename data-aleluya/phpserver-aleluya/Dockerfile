@@ -1,5 +1,5 @@
 #ουτως γαρ ηγαπησεν ο θεος τον κοσμον, ωστε τον υιον αυτου τον μονογενη εδωκεν, ινα πας ο πιστευων εις αυτον μη αποληται αλλα εχῃ ζωην αιωνιον.
-FROM alpine:latest
+FROM alpine
 
 # Environments
 ENV TIMEZONE            America/Guatemala
@@ -11,6 +11,7 @@ ENV PHP_MAX_POST        100M
 # Thanks Jesus for https://github.com/matriphe/docker-alpine-php/blob/master/7.0/FPM/Dockerfile and others
 
 ##RUN echo "@testing http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
+##RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/http:\/\/mirrors.aliyun.com/g' /etc/apk/repositories
 RUN apk add --update \
 		lighttpd \
     runit \

@@ -71,7 +71,6 @@ server {
 
 
     location ~ /*.php {
-        index index.php;
         include snippets/fastcgi-php.conf;
         fastcgi_pass unix:/run/php/php7.2-fpm.sock;
     }
