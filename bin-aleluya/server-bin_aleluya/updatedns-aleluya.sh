@@ -26,6 +26,12 @@ cat $DIR_ALELUYA/../etc-aleluya/hosts-aleluya | while read aleluya; do
   DOMAIN_ALELUYA=`echo $aleluya| tr -s ' ' | cut -d' ' -f2`
   SUBDOMAIN_ALELUYA=`basename -s .$BASEDOMAIN_ALELUYA $DOMAIN_ALELUYA`
   if [ "$SUBDOMAIN_ALELUYA" = "$BASEDOMAIN_ALELUYA" ]; then SUBDOMAIN_ALELUYA="@"; fi
+    
+  namecheap-api-cli-aleluya --list --domain $BASEDOMAIN_ALELUYA | grep "A.*$SUBDOMAIN_ALELUYA.*>" | cut -d'>' -f2 | while read OIP_ALELUYA; do
+    echo HALLELUJAH $OIP_ALELUYA -\> $IP_ALELUYA
+    namecheap-api-cli-aleluya --del --domain $BASEDOMAIN_ALELUYA --name $SUBDOMAIN_ALELUYA --type A --address $OIP_ALELUYA
+  done
+
   echo namecheap-api-cli-aleluya --add --domain $BASEDOMAIN_ALELUYA --type A --name $SUBDOMAIN_ALELUYA --address $IP_ALELUYA
   namecheap-api-cli-aleluya --add --domain $BASEDOMAIN_ALELUYA --type A --name $SUBDOMAIN_ALELUYA --address $IP_ALELUYA
 done
@@ -36,6 +42,12 @@ cat $DIR_ALELUYA/../etc-aleluya/hosts-other-aleluya | while read aleluya; do
   TARGET_ALELUYA=`echo $aleluya| tr -s ' ' | cut -d' ' -f3`
   SUBDOMAIN_ALELUYA=`basename -s .$BASEDOMAIN_ALELUYA $DOMAIN_ALELUYA`
   if [ "$SUBDOMAIN_ALELUYA" = "$BASEDOMAIN_ALELUYA" ]; then SUBDOMAIN_ALELUYA="@"; fi
+   namecheap-api-cli-aleluya --list --domain $BASEDOMAIN_ALELUYA | grep "$TYPE_ALELUYA.*$SUBDOMAIN_ALELUYA.*>" | cut -d'>' -f2 | while read OIP_ALELUYA; do
+    echo HALLELUJAH $OIP_ALELUYA -\> $IP_ALELUYA
+    namecheap-api-cli-aleluya --del --domain $BASEDOMAIN_ALELUYA --name $SUBDOMAIN_ALELUYA --type $TYPE_ALELUYA --address $OIP_ALELUYA
+  done
+
+
   echo namecheap-api-cli-aleluya --add --domain $BASEDOMAIN_ALELUYA --type $TYPE_ALELUYA --name $SUBDOMAIN_ALELUYA --address $TARGET_ALELUYA
   namecheap-api-cli-aleluya --add --domain $BASEDOMAIN_ALELUYA --type $TYPE_ALELUYA --name $SUBDOMAIN_ALELUYA --address $TARGET_ALELUYA
 done
