@@ -224,7 +224,7 @@ ALELUYA
   sudo bash -c "echo $HOSTNAME_ALELUYA >| /etc/mailname" 
   sudo postconf -e "myhostname = $HOSTNAME_ALELUYA" 
   
-  sudo apt install dovecot-lmtpd -y
+  sudo apt install dovecot-lmtpd dovecot-imapd -y
   sudo cp ~/.hallelujah1/etc-aleluya/dovecot-aleluya/* /etc/dovecot -r
 
   sudo bash <<ALELUYA
@@ -237,7 +237,8 @@ ALELUYA
   mkdir -p /var/dovecot/d-aleluya/$HOSTNAME_ALELUYA/
   echo aleluya@$HOSTNAME_ALELUYA:$RND_ALELUYA:::::: > /var/dovecot/d-aleluya/$HOSTNAME_ALELUYA/passwd-aleluya
 ALELUYA
-
+  sudo mkdir -p /etc/postfix/ssl
+  sudo openssl req -new -x509 -days 3650 -nodes -out /etc/postfix/ssl/mailserver.crt -keyout /etc/postfix/ssl/mailserver.key
   sudo ufw allow smtp
 fi
 
