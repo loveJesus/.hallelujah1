@@ -20,35 +20,25 @@ function nameCheapComboSetDefault_aleluya {
 }
 
 #nameCheapComboSetDefault_aleluya $BASEDOMAIN_ALELUYA
+tmp_aleluya=`mktemp`
+echo "add_zone|$BASEDOMAIN_ALELUYA." >> $tmp_aleluya
 
 cat $DIR_ALELUYA/../etc-aleluya/hosts-aleluya | while read aleluya; do
   IP_ALELUYA=`echo $aleluya | tr -s ' '| cut -d' ' -f1`
   DOMAIN_ALELUYA=`echo $aleluya| tr -s ' ' | cut -d' ' -f2`
-  SUBDOMAIN_ALELUYA=`basename -s .$BASEDOMAIN_ALELUYA $DOMAIN_ALELUYA`
-  if [ "$SUBDOMAIN_ALELUYA" = "$BASEDOMAIN_ALELUYA" ]; then SUBDOMAIN_ALELUYA="@"; fi
-    
-  namecheap-api-cli-aleluya --list --domain $BASEDOMAIN_ALELUYA | grep "A.*$SUBDOMAIN_ALELUYA.*>" | cut -d'>' -f2 | while read OIP_ALELUYA; do
-    echo HALLELUJAH $OIP_ALELUYA -\> $IP_ALELUYA
-    namecheap-api-cli-aleluya --del --domain $BASEDOMAIN_ALELUYA --name $SUBDOMAIN_ALELUYA --type A --address $OIP_ALELUYA
-  done
-
-  echo namecheap-api-cli-aleluya --add --domain $BASEDOMAIN_ALELUYA --type A --name $SUBDOMAIN_ALELUYA --address $IP_ALELUYA
-  namecheap-api-cli-aleluya --add --domain $BASEDOMAIN_ALELUYA --type A --name $SUBDOMAIN_ALELUYA --address $IP_ALELUYA
+  echo "add_record|$BASEDOMAIN_ALELUYA.|A|$DOMAIN_ALELUYA.|$IP_ALELUYA" >>$tmp_aleluya    
 done
 
 cat $DIR_ALELUYA/../etc-aleluya/hosts-other-aleluya | while read aleluya; do
   TYPE_ALELUYA=`echo $aleluya| tr -s ' ' | cut -d' ' -f1`
   DOMAIN_ALELUYA=`echo $aleluya| tr -s ' ' | cut -d' ' -f2`
   TARGET_ALELUYA=`echo $aleluya| tr -s ' ' | cut -d' ' -f3`
-  SUBDOMAIN_ALELUYA=`basename -s .$BASEDOMAIN_ALELUYA $DOMAIN_ALELUYA`
-  if [ "$SUBDOMAIN_ALELUYA" = "$BASEDOMAIN_ALELUYA" ]; then SUBDOMAIN_ALELUYA="@"; fi
-   namecheap-api-cli-aleluya --list --domain $BASEDOMAIN_ALELUYA | grep "$TYPE_ALELUYA.*$SUBDOMAIN_ALELUYA.*>" | cut -d'>' -f2 | while read OIP_ALELUYA; do
-    echo HALLELUJAH $OIP_ALELUYA -\> $IP_ALELUYA
-    namecheap-api-cli-aleluya --del --domain $BASEDOMAIN_ALELUYA --name $SUBDOMAIN_ALELUYA --type $TYPE_ALELUYA --address $OIP_ALELUYA
-  done
-
-
-  echo namecheap-api-cli-aleluya --add --domain $BASEDOMAIN_ALELUYA --type $TYPE_ALELUYA --name $SUBDOMAIN_ALELUYA --address $TARGET_ALELUYA
-  namecheap-api-cli-aleluya --add --domain $BASEDOMAIN_ALELUYA --type $TYPE_ALELUYA --name $SUBDOMAIN_ALELUYA --address $TARGET_ALELUYA
+  if [ "$DOMAIN_ALELUYA" = "@" ]; then DOMAIN_ALELUYA=$BASEDOMAIN_ALELUYA;fi
+  if [ "$TYPE_ALELUYA" = "MX" ]; then TARGET_ALELUYA="10 $TARGET_ALELUYA";fi
+  echo "add_record|$BASEDOMAIN_ALELUYA.|$TYPE_ALELUYA|$DOMAIN_ALELUYA.|$TARGET_ALELUYA." >>$tmp_aleluya
 done
+cat $tmp_aleluya | kafka-write-aleluya.sh pdns5-aleluya
+echo ALELUYA
+cat $tmp_aleluya
+rm $tmp_aleluya
 
