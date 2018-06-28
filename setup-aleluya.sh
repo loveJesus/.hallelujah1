@@ -185,6 +185,26 @@ ALELUYA
 
 fi
 
+read -p "Set up openvpn HALLELUJAH [y/n] ? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+  sudo apt  install libssl-dev libpam-dev liblz4-dev liblzo2-dev
+  tmp_aleluya=`mktemp`
+  wget https://swupdate.openvpn.org/community/releases/openvpn-2.4.6.tar.gz -O $tmp_aleluya.tgz
+  pushd .
+  cd /tmp
+  tar xzvf $tmp-aleluya
+  cd openvpn-2.4.6
+  ./configure
+  make
+  sudo make install
+
+  #ALELUYA
+  popd
+fi
+
+
 read -p "Set up postfix HALLELUJAH [y/n] ? " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
