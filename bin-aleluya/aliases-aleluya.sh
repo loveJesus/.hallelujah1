@@ -80,6 +80,10 @@ function nameCheapFilesDisplay_aleluya {
   for aleluya in *.aleluya; do echo '~' ; echo ALELUYA $aleluya ---- ; cat $aleluya | grep Nameserver | sed -r 's/.*>(.*)<.*/\1/g'; done | paste -sd' ' | tr '~' '\n' 
 }
 
+function speed-test-aleluya {
+  #Thank You Jesus for mweisel, zanna https://askubuntu.com/a/269821
+  curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -
+}
 
 function noSshKeyCheckAleluya {
     # Add the servers to the sshloginfile
