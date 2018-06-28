@@ -19,6 +19,7 @@ then
     sudo ufw enable
     sudo apt-get install apt-transport-https zip unzip w3m aspcud m4 davfs2 gawk jq -y
     sudo apt-get install software-properties-common python-software-properties sqlite3 -y
+    echo | sudo add-apt-repository ppa:kelleyk/emacs
     echo | sudo add-apt-repository ppa:gophers/archive
     echo | sudo add-apt-repository ppa:git-core/ppa
     aleluya=`mktemp`
@@ -27,7 +28,7 @@ then
     sudo apt update
     sudo apt install locales-all -y
     sudo dpkg-reconfigure locales
-    sudo apt install socat emacs ufw vim tmux zsh whois telnet dnsutils build-essential davfs2 -y
+    sudo apt install socat emacs26 ufw vim tmux zsh whois telnet dnsutils build-essential davfs2 -y
     sudo apt install lib32z1 lib32ncurses5 lib32stdc++6  -y
     sudo useradd hallelujah 
     sudo chsh hallelujah -s /bin/zsh
@@ -429,4 +430,6 @@ ALELUYA
 fi
 
 
-sudo usermod hallelujah -G sudo,adm,audio,www-data,video,voice,cdrom,floppy,plugdev,users,input,davfs2,docker
+sudo usermod hallelujah -a -G sudo,adm,audio,www-data,video,voice,cdrom,floppy,plugdev,users,input
+sudo usermod hallelujah -a -G davfs2,docker
+
