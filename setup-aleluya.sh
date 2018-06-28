@@ -259,11 +259,21 @@ then
   curl http://www-eu.apache.org/dist/kafka/1.1.0/kafka_2.11-1.1.0.tgz |  sudo tar xzvf - 
   sudo rm -rf kafka-aleluya
   sudo mv kafka_2.11-1.1.0 kafka-aleluya
-  sudo gawk -i inplace '{ if (NR!=252) {print $0 "# ALELUYA "} else {print "JAVA_MAJOR_VERSION=$($JAVA -version 2>&1 | sed -E -n \x27s/.* version \"([0-9]*).*$/\1/p\x27) " }' kafka-run-class.sh
+  sudo gawk -i inplace '{ if (NR!=252) {print $0 "# ALELUYA "} else {print "JAVA_MAJOR_VERSION=$($JAVA -version 2>&1 | sed -E -n \x27s/.* version \"([0-9]*).*$/\1/p\x27) " }}' kafka-run-class.sh
   sudo mkdir /tmp/kafka-aleluya-logs
+  sudo mkdir /usr/local/kafka-aleluya/logs
+  sudo chown kafka-s-aleluya /usr/local/kafka-aleluya/logs
   sudo chmod 700 /tmp/kafka-aleluya-logs
   sudo chown kafka-s-aleluya /tmp/kafka-aleluya-logs
-  sudo sed -i 's/^log.dirs.*/log.dirs=\/tmp\/kafka-aleluya-logs/g' /usr/local/kafka-aleluya/config/server.properties
+  sudo sed 's/^log.dirs.*/log.dirs=\/tmp\/kafka-aleluya-logs/g' /usr/local/kafka-aleluya/config/server.properties > /usr/local/kafka-aleluya/config/server-aleluya.properties
+  sudo sed -i "s/^broker.id.*/broker.id=$RANDOM/g"  /usr/local/kafka-aleluya/config/server-aleluya.properties
+  sudo ufw allow in on tun0 to any port 9092
+  read -p "Hallelujah, host lookup domain/ip: " hostlookup_aleluya
+  echo
+  sudo bash <<ALELUYA
+  echo "listeners=PLAINTEXT://:9092" >>  /usr/local/kafka-aleluya/config/server-aleluya.properties
+  echo "advertised.listeners=PLAINTEXT://$hostlookup_aleluya:9092" >>/usr/local/kafka-aleluya/config/server-aleluya.properties
+ALELUYA
   popd
 
    cat <<ALELUYA >| /tmp/kafka-aleluya.service
