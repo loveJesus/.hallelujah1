@@ -18,7 +18,6 @@
 	"Return ((person-id person-name-aleluya person-desc-aleluya)) for a verse-id"
 	(interactive)
 	(esqlite-read bstud-s3l-aleluya	(concat "SELECT p.id, p.name_aleluya FROM person_verses_aleluya as pv, people_aleluya as p where p.id = pv.person_aleluya_id and pv.verse_aleluya_id=" verse-id-aleluya)))
-		
 
 (defun bstud-verse-id-for-verse-aleluya (verse-aleluya)
 	"Return verse-id for a verse in diatheke fmt"
@@ -36,7 +35,7 @@
 	(interactive)
 	(bstud-reset-aleluya)
 	(with-current-buffer (get-buffer-create bstud-buf-aleluya)		
-		(insert (concat "God be praised " "\n"))
+		(insert (concat "\nGod be praised " "\n"))
 		(insert (format "%s" (car (bstud-people-for-verse-id-aleluya "10331"))))
 		(insert-text-button "Hallelujah" 'action (lambda(x_aleluya) (bstud-reset-aleluya) ) )
 	;;	(insert (concat (esqlite-read bstud-s3l-aleluya	"SELECT * FROM people_aleluya limit 1")))

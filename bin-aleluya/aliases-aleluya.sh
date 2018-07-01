@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 # For God so loved the world
 # That He gave His only begotten SOn, That all who believe in Him should not perish
 # But have everlasting life
@@ -11,6 +11,44 @@ alias ddp_aleluya='sed -r "/^:/, \$d" | sed "/^\s*$/d" | sed "/^(ESV2011)$/d" | 
 
 function titleImgAleluya {
   convert "$1" -font /usr/share/fonts/TTF/DejaVuSans.ttf -stroke black -fill white -gravity Center -weight 700 -pointsize 30  -annotate 0 "$2" "$3"
+}
+function json-string-prepare-aleluya {
+		#Halellujah, thank You Jesus for https://superuser.com/questions/1076564/sending-gist-to-github-via-curl-and-issues-with-new-lines-inside-file
+   sed 's/"/\\"/g' | sed ':a;N;$!ba;s/\n/\\n/g'
+}
+
+function github-new-gist-aleluya {
+
+ACCESS_TOKEN_ALELUYA=$GITHUB_PKEY_ALELUYA
+
+read "description_aleluya?Hallelujah - description: "
+read "public_a_aleluya?Hallelujah - public? (y/N) "
+read "filename_aleluya?Hallelujah - filename: "
+
+desc_aleluya=$(echo "$description_aleluya" | sed 's/"/\\"/g' | sed ':a;N;$!ba;s/\n/\\n/g')
+json_aleluya=$(cat "$filename_aleluya" | sed 's/"/\\"/g' | sed ':a;N;$!ba;s/\n/\\n/g')
+
+curl -v -H "Content-Type: text/json; charset=utf-8" \
+        -H "Authorization: Token $ACCESS_TOKEN_ALELUYA" \
+        -X POST https://api.github.com/gists -d @- << EOF
+{ 
+  "description": "$desc_aleluya", 
+  "public": "$public_a_aleluya", 
+  "files": { 
+      "$filename_aleluya" : { 
+          "content": "$json_aleluya"
+       } 
+   } 
+}
+EOF
+		}
+function github-new-key-aleluya {
+  read "title_aleluya?Aleluya - Title: " 
+  echo
+  read "key_aleluya?Aleluya - paste key: " 
+  echo
+  curl https://api.github.com/user/keys\?access_token\=$GITHUB_PKEY_ALELUYA -X POST --data "{\"title\":\"$title_aleluya\",\"key\":\"$key_aleluya\"}"
+
 }
 
 function guitar-chord2-aleluya { 
